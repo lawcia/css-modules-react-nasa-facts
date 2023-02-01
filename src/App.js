@@ -1,27 +1,33 @@
-import './App.css';
+import { useState } from 'react';
+
+import Background from './Background/Background';
+import Grid from './Grid/Grid';
+import Rocket from './Rocket/Rocket';
+import Smoke from './Rocket/Smoke';
+import Title from './Title/Title';
+
+// Data
+import initialFacts from './data/NASA_facts.json';
+
+// Styles
+import styles from './App.module.css';
 
 function App() {
+  const [facts, setFacts] = useState(initialFacts);
+
+  const updateClicked = (id) => {
+    const factsCopy = Object.assign([], facts);
+    factsCopy[id].clicked = true;
+    setFacts(factsCopy);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src="Octocat.png" className="App-logo" alt="logo" />
-        <p>
-          GitHub Codespaces <span className="heart">♥️</span> React
-        </p>
-        <p className="small">
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </p>
-      </header>
+    <div className={styles.App}>
+      <Title />
+      <Background />
+      <Grid facts={facts} updateClicked={updateClicked} />
+      <Rocket />
+      <Smoke />
     </div>
   );
 }
